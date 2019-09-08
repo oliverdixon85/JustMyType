@@ -9,6 +9,8 @@ $(document).ready(function () {
     $('#sentence').text(currentSentence);
     $('#target-letter').text(currentLetter);
 
+    
+
 $('#keyboard-upper-container').hide()
 
 $('body').keydown(function(e){
@@ -28,8 +30,28 @@ $('body').keyup(function(e) {
 });
 
 $('body').keypress(function(e){
-    $('#' + e.which).addClass('make-it-yellow');
+
+    if(letterIndex === currentSentence.length -1){
+        letterIndex = 0;
+        $('#feedback').empty();
+        sentenceIndex++;
+        let currentSentence = sentences[sentenceIndex];
+        $('#sentence').text(currentSentence);
+    } else {
+
+        if(e.which === currentSentence.charCodeAt(letterIndex)){
+            $('#feedback').append('<span class="glyphicon glyphicon-ok"></span>');
+        } else {
+            $('#feedback').append('<span class="glyphicon glyphicon-remove"></span>');
+        }
     
+        letterIndex++;
+        let currentLetter = currentSentence[letterIndex];
+        $('#target-letter').text(currentLetter);
+        $('#' + e.which).addClass('make-it-yellow');
+    }
+
+   
 
 })
 
